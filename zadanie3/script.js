@@ -4,9 +4,9 @@
 
 const weatherUrl =
     "https://api.open-meteo.com/v1/forecast" +
-    "?latitude=48.15" +
-    "&longitude=17.11" +
-    "&current=temperature_2m,wind_speed_10m" +
+    "?latitude=48.151965" +
+    "&longitude=17.072995" +
+    "&current=temperature_2m,wind_speed_10m,relative_humidity_2m" +
     "&timezone=auto";
 
 fetch(weatherUrl)
@@ -15,10 +15,12 @@ fetch(weatherUrl)
 
         const temperature = data.current.temperature_2m;
         const wind = data.current.wind_speed_10m;
+        const humidity = data.current.relative_humidity_2m;
 
         document.getElementById("weather").innerHTML =
             "Teplota: " + temperature + " °C<br>" +
-            "Vietor: " + wind + " km/h";
+            "Vietor: " + wind + " km/h<br>" +
+            "Vlhkost: " + humidity + "%";
 
     })
     .catch(error => {
@@ -43,7 +45,7 @@ const map = L.map("map").setView(
 L.tileLayer(
     "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
     {
-        maxZoom: 19,
+        maxZoom: 14,
         attribution:
             '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }
@@ -57,4 +59,9 @@ L.tileLayer(
 L.marker([48.151965, 17.072995])
     .addTo(map)
     .bindPopup("FEI STU Bratislava")
+    .openPopup();
+
+L.marker([49.310278, 19.53])
+    .addTo(map)
+    .bindPopup("sigma")
     .openPopup();
